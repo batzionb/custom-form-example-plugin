@@ -38,7 +38,7 @@
     "@backstage/plugin-user-settings": "^0.8.9",
     "@backstage/theme": "^0.5.6",
     "@backstage/types": "^1.1.1",
-    "@janus-idp/backstage-plugin-orchestrator-form-react": "1.0.101",
+    "@janus-idp/backstage-plugin-orchestrator-form-react": "file:.yalc/@janus-idp/backstage-plugin-orchestrator-form-react",
     "@material-ui/core": "^4.12.2",
     "@material-ui/icons": "^4.9.1",
     "custom-form-example-plugin": "*",

@@ -16,15 +16,17 @@ interface Option {
 }
 
 const LanguageWidget: Widget<JsonObject, JSONSchema7, FormContextData> = ({ value, onChange, formContext }) => {
+  
   const [languages, setLanguages] = useState<Option[]>([]);
   const [loading, setLoading] = useState(false);
   const country = formContext?.country;
-
+  console.log("LanguageWidget value", value, "country", formContext?.country);
   const fetchLanguages = React.useCallback(async () => {
     try {
       const response = await fetch("https://restcountries.com/v3.1/all");
       const data = await response.json() as unknown as any[];    
       const countryData = data.find((c: any) => c.name.common === country);
+      console.log({countryData})
       if (countryData && countryData.languages) {
         const languageOptions: Option[] = Object.entries(countryData.languages).map(([code, language]) => ({
           label: language as string,
@@ -43,10 +45,10 @@ const LanguageWidget: Widget<JsonObject, JSONSchema7, FormContextData> = ({ valu
   }, [country]);
 
   useEffect(() => {
-    if (languages.length === 1) {
+    if (languages.length === 1 && !value) {
       onChange(languages[0].value);
     }
-  }, [languages, onChange]);
+  }, [languages, onChange, value]);
 
   useEffect(() => {
     if (country) {

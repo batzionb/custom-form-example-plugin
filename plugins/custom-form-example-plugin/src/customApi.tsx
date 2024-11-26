@@ -26,11 +26,11 @@ const sleep = (ms: number) => {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 class CustomFormExtensionsApi implements OrchestratorFormApi {  
-    getFormDecorator(_schema: JSONSchema7, _uiSchema: UiSchema<JsonObject>) {
+    getFormDecorator(_schema: JSONSchema7, _uiSchema: UiSchema<JsonObject>, initialFormData?: JsonObject) {
       return (FormComponent: React.ComponentType<FormDecoratorProps>) => {    
         
         return () => {
-          const [formContext, setFormContext] = React.useState<FormContextData>({});
+          const [formContext, setFormContext] = React.useState<FormContextData>({country: initialFormData?.personalInfo?.country});
           const customValidate = (formData: JsonObject | undefined, errors: FormValidation<JsonObject>): FormValidation<JsonObject> => {
             const _formData = formData as Data | undefined;
             if (_formData?.personalInfo?.password !== _formData?.personalInfo?.confirmPassword) {
@@ -44,6 +44,7 @@ class CustomFormExtensionsApi implements OrchestratorFormApi {
           };
           return (<FormComponent widgets={widgets} onChange={(e) => {
               const data = e.formData as Data;            
+              console.log({data});
               if (data.personalInfo?.country !== formContext.country ) {
                 setFormContext({country: data.personalInfo?.country});                    
               }                  
